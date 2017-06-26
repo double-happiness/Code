@@ -1,0 +1,22 @@
+#include<stdio.h>
+#include<unistd.h>
+#include<stdlib.h>
+
+int main()
+{
+        int id=fork();
+        if(id==0){
+                printf("child: pid is %d, group id  is %d, session id :%d\n",getpid(),getpgrp(),getsid(0));
+                sleep(2);
+                int i=0;
+                setsid();
+                printf("child: pid is %d, group id  is %d, new session id :%d\n",getpid(),getpgrp(),getsid(0));
+                exit(0);
+        }
+        else if(id>0){
+                printf("parent: pid is %d, group id  is %d, session id :%d\n",getpid(),getpgrp(),getsid(0));
+                sleep(3);
+                printf("parent: pid is %d, group id  is %d, session id :%d\n",getpid(),getpgrp(),getsid(0));
+        }
+        return 0;
+}
